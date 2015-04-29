@@ -28,16 +28,10 @@ P11 = 5*eye(2);  % assume initial estimation is correct
 filt = []; true = []; meas = []; P = [];
 for i=1:length(t)
     x_1_1 = x11; P_1_1 = P11;
-    x1_1 = F*x_1_1+B*u;
-    P1_1 = F*P_1_1*F'+Q;
     w = sigma_w*randn(1); v = sigma_v*randn(1); 
     x = F*x+B*u+W*w;
     z = H*x+V*v;
-    y = z - H*x1_1;
-    S = H*P1_1*H'+R;
-    K = P1_1*H'*inv(S);
-    x11 = x1_1+K*y;
-    P11 = (eye(2)-K*H)*P1_1;
+    [x11,P11]=kf(F,x_1_1,B,u,P_1_1,H,z,Q,R);
     P = [P P11([1 4])'];
     filt = [filt x11];
     true = [true x];
