@@ -26,6 +26,6 @@ y = z - H*x1_1;
 S = H*P1_1*H'+R;
 K = P1_1*H'*inv(S);
 x11 = x1_1+K*y;
-P11 = (eye(2)-K*H)*P1_1;
+P11 = (eye(size(P1_1,1))-K*H)*P1_1;
 P = P11;
 x = x11;
